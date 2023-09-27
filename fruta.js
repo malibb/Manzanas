@@ -33,7 +33,7 @@ export class Fruta {
         contextoColision.fillStyle = this.color;
 
         contextoColision.fillRect(this.x, this.y, this.ancho, this.alto);
-        // contexto.drawImage(this.imagen, this.cuadro * this.spriteAncho, 0, this.spriteAncho, this.spriteAlto, this.x, this.y, this.ancho, this.alto)
+        contexto.drawImage(this.imagen, this.cuadro * this.spriteAncho, 0, this.spriteAncho, this.spriteAlto, this.x, this.y, this.ancho, this.alto)
 
     }
 

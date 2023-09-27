@@ -5,13 +5,13 @@ window.addEventListener('load', function() {
     // Configuración Inicial
     const lienzo = document.getElementById('lienzo');
     const ctx = lienzo.getContext('2d');
-    ctx.width = 700;
-    ctx.height = 700;
+    lienzo.width = 500;
+    lienzo.height = 500;
 
     const colision = document.getElementById('colision');
     const ctxColision = colision.getContext('2d');
-    ctxColision.width = 700;
-    ctxColision.height = 700;
+    colision.width = 500;
+    colision.height = 500;
 
     class Juego {
         constructor(ancho, alto, contexto) {
@@ -23,7 +23,7 @@ window.addEventListener('load', function() {
 
             this.ultimoTiempo = 0;
             this.tiempoSiguienteFruta = 0;
-            this.intervaloEntreFrutas = 2000;
+            this.intervaloEntreFrutas = 500;
 
             this.puntacion = 0;
 
@@ -66,7 +66,7 @@ window.addEventListener('load', function() {
     const juego = new Juego(lienzo.width, lienzo.height, ctx);
 
     window.addEventListener('click', function(e) {
-        const colorPixel = ctxColision.getImageData(e.offsetX, e.offsetY, 1,1);
+        const colorPixel = ctxColision.getImageData(e.offsetX, e.offsetY, 2,2);
         console.log('Evento', e.offsetX, e.offsetY);
         console.log('colorPixel', colorPixel.data[0], colorPixel.data[1], colorPixel.data[2]);
         const cp = colorPixel.data;
@@ -75,10 +75,10 @@ window.addEventListener('load', function() {
             console.log(fruta.coloresAleatorios, cp);
             if(cp[0] === fruta.coloresAleatorios[0] && cp[1] === fruta.coloresAleatorios[1]&& cp[2] === fruta.coloresAleatorios[2]){
                 fruta.deboMorir = true;
-                
+                juego.puntacion++;
             }
         });
-        juego.puntacion++;
+        
     });
 
     function animate(marcaTiempo) {
