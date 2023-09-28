@@ -5,8 +5,10 @@ window.addEventListener('load', function() {
     // Configuración Inicial
     const lienzo = document.getElementById('lienzo');
     const ctx = lienzo.getContext('2d');
+
     lienzo.width = 500;
     lienzo.height = 500;
+
 
     const colision = document.getElementById('colision');
     const ctxColision = colision.getContext('2d');
@@ -26,7 +28,9 @@ window.addEventListener('load', function() {
             this.intervaloEntreFrutas = 500;
 
             this.puntacion = 0;
+            this.oportunidades = 3;
 
+            this.gameOver = false;
         }
 
         //draw
@@ -57,8 +61,21 @@ window.addEventListener('load', function() {
         }
 
         dibujarPuntuacion () {
+            this.contexto.font = "30px Arial";
             this.contexto.fillStyle = 'black';
-            this.contexto.fillText(`Score: ${this.puntacion}`, 10, 10);
+            this.contexto.fillText(`Score: ${this.puntacion}`, 10, 50);
+            this.contexto.fillText(`Oportunidades: ${this.oportunidades}`, 200, 50);
+        }
+
+        dibujarGameOver () {
+            this.gameOver = true;
+            this.contexto.font = "30px Arial";
+            this.contexto.fillStyle = 'black';
+            this.contexto.fillText(`Game Over: ${this.puntacion}`, 150, 200);
+            this.contexto.fillText(`Score: ${this.puntacion}`, 160, 250);
+            this.contexto.fillRect(140, 270, 180, 60);
+            this.contexto.fillStyle = 'white';
+            this.contexto.fillText(`Reiniciar`, 170, 310);
         }
 
     }
@@ -66,6 +83,12 @@ window.addEventListener('load', function() {
     const juego = new Juego(lienzo.width, lienzo.height, ctx);
 
     window.addEventListener('click', function(e) {
+        if (juego.gameOver) {
+            console.log(e.offsetX, e.offsetY);
+            if(e.x > 140 && e.x < 300) {
+                juego.gameOver = true;
+            }
+        }
         const colorPixel = ctxColision.getImageData(e.offsetX, e.offsetY, 2,2);
         console.log('Evento', e.offsetX, e.offsetY);
         console.log('colorPixel', colorPixel.data[0], colorPixel.data[1], colorPixel.data[2]);
@@ -87,7 +110,8 @@ window.addEventListener('load', function() {
         juego.actualizar(marcaTiempo);
 
         juego.dibujarPuntuacion();
-        requestAnimationFrame(animate);
+        if (juego.oportunidades > 0) requestAnimationFrame(animate);
+        else juego.dibujarGameOver();
     }
 
     animate(0);

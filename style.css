@@ -5,7 +5,9 @@
 }
 
 body {
-    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(0deg, rgb(111,209, 163), rgb(88, 248, 150), rgb(37,37, 255));
 }
 
 canvas {
@@ -20,5 +22,5 @@ canvas {
 }
 
 #colision{
-    opacity: 0.3;
+    opacity: 0;
 }
